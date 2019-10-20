@@ -1,0 +1,27 @@
+{
+  "name": "react-native-notifications",
+  "version": "0.0.1",
+  "description": "Create in app notifications in react-native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phomea/react-native-notifications.git"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "notifications",
+    "in",
+    "app",
+    "notifications"
+  ],
+  "author": "phomea",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phomea/react-native-notifications/issues"
+  },
+  "homepage": "https://github.com/phomea/react-native-notifications#readme"
+}
