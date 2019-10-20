@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/phomea/react-native-notifications/issues"
   },
+  "devDependencies": {
+    "metro-react-native-babel-preset": "^0.56.0"
+  },
   "homepage": "https://github.com/phomea/react-native-notifications#readme"
 }
