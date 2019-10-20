@@ -1,5 +1,5 @@
 {
-  "name": "react-native-notifications",
+  "name": "@phomea/react-native-notifications",
   "version": "0.0.1",
   "description": "Create in app notifications in react-native",
   "main": "index.js",
