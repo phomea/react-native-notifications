@@ -11,6 +11,8 @@ import {
 import cancelIcon from './cancel.png';
 
 import notificationIcon from './notification.png';
+import themes from './themes';
+import themeColors from './colors';
 
 class Notification extends React.Component {
   animatedShow = new Animated.Value(100);
@@ -24,7 +26,7 @@ class Notification extends React.Component {
   constructor() {
     super();
     this.toggleContent = this.toggleContent.bind(this);
-    this.close = this.close.bind(this)
+    this.close = this.close.bind(this);
   }
 
   close() {
@@ -34,6 +36,7 @@ class Notification extends React.Component {
       easing: Easing.elastic(1),
     }).start(() => {
       this.props.close();
+      this.props.notification.settings.onClose();
     });
   }
   componentDidMount() {
@@ -71,7 +74,33 @@ class Notification extends React.Component {
     }).start();
   }
   render() {
+    const {notification} = this.props;
+    const {theme, themeColor} = notification.settings;
     const containerStyle = {
+      ...themes[theme].containerStyle,
+      ...themeColors[themeColor].containerStyle,
+      transform: [
+        {
+          translateY: this.animatedShow,
+        },
+      ],
+    };
+
+    const headerStyle = {
+      ...themes[theme].headerStyle,
+      ...themeColors[themeColor].headerStyle,
+    };
+    const textStyle = {
+      ...themes[theme].textStyle,
+      ...themeColors[themeColor].textStyle,
+    };
+    const iconHolder = {
+      ...themes[theme].iconHolder,
+      ...themeColors[themeColor].iconHolder,
+    };
+
+    const iconStyle = themeColors[themeColor].icon;
+    /*const containerStyle = {
       position: 'absolute',
       bottom: 0,
       backgroundColor: '#333333dd',
@@ -102,16 +131,15 @@ class Notification extends React.Component {
       justifyContent: 'center',
       alignItems: 'center',
     };
+    */
 
-    const {notification} = this.props;
     return (
       <Animated.View style={containerStyle}>
         <View style={headerStyle}>
           <View style={iconHolder}>
             <Animated.Image
               style={{
-                width: 30,
-                height: 30,
+                ...iconStyle,
                 transform: [
                   {
                     scale: this.iconAppear,
@@ -144,7 +172,6 @@ class Notification extends React.Component {
                 style={{
                   ...textStyle,
                   fontSize: 12,
-                  color: '#BEBEBE',
                 }}>
                 {notification.description}
               </Text>
@@ -153,13 +180,7 @@ class Notification extends React.Component {
 
           <View style={iconHolder}>
             <TouchableWithoutFeedback onPress={this.close}>
-              <Image
-                style={{
-                  width: 30,
-                  height: 30,
-                }}
-                source={cancelIcon}
-              />
+              <Image style={iconStyle} source={cancelIcon} />
             </TouchableWithoutFeedback>
           </View>
         </View>
@@ -176,7 +197,7 @@ class Notification extends React.Component {
             }}>
             <Text
               style={{
-                color: '#eee',
+                ...textStyle,
                 lineHeight: 20,
               }}>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -199,6 +220,9 @@ class Notification extends React.Component {
                 alignItems: 'center',
                 justifyContent: 'center',
                 alignSelf: 'center',
+              }}
+              onPress={() => {
+                notification.settings.callToAction(this);
               }}>
               <View
                 style={{
@@ -207,7 +231,9 @@ class Notification extends React.Component {
                   borderRadius: 10,
                   backgroundColor: '#ccc',
                 }}>
-                <Text style={{textAlign: 'center'}}>Call to action</Text>
+                <Text style={{textAlign: 'center'}}>
+                  {notification.settings.callToActionTitle}
+                </Text>
               </View>
             </TouchableWithoutFeedback>
           </View>
